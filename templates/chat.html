@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat with {{ chat_partner }}</title>
+</head>
+<body>
+    <h1>hello</h1>
+    <!-- <h1>Chat with {{ chat_partner }}</h1>
+    <div id="chat-history">
+        Display chat history here
+    </div>
+    <form id="chat-form">
+        <input type="text" id="message-input" placeholder="Type your message..." />
+        <button type="button" onclick="sendMessage()">Send</button>
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        socket.on('message', function(data) {
+            var chatHistory = document.getElementById('chat-history');
+            chatHistory.innerHTML += '<p><strong>' + data.sender + ':</strong> ' + data.message + '</p>';
+        });
+
+        function sendMessage() {
+            var messageInput = document.getElementById('message-input').value;
+            var recipient = '{{ chat_partner }}';
+
+            socket.emit('message', { sender: '{{ current_user }}', recipient: recipient, message: messageInput });
+
+            var chatHistory = document.getElementById('chat-history');
+            chatHistory.innerHTML += '<p><strong>{{ current_user }}:</strong> ' + messageInput + '</p>';
+
+            document.getElementById('message-input').value = '';
+        }
+    </script> -->
+</body>
+</html>

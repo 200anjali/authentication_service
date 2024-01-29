@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Authentication</title>
+  </head>
+  <body>
+    <h2>User Authentication</h2>
+    <form id="authForm" method="post">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required /><br />
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required /><br />
+      <label for="action">Action:</label>
+      <select id="action" name="action">
+        <option value="register">Register</option>
+        <option value="login">Login</option>
+        <option value="logout">Logout</option>
+    </select><br/>
+      <button type="button" onclick="performAction()">Submit</button>
+    </form>
+    <script>
+      function performAction() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const action = document.getElementById("action").value;
+        const userData = {
+          username: username,
+          password: password,
+        };
+        let endpoint = "";
+
+  if (action === "register") {
+    endpoint = "http://localhost:9999/register";
+  } else if (action === "login") {
+    endpoint = "http://localhost:9999/login";
+  } else if (action === "logout") {
+    endpoint = "http://localhost:9999/logout";
+  }
+
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+  const token = localStorage.getItem("token");
+
+  if (token && action === "logout") {
+    headers["Authorization"] = "Bearer " + token;
+  }
+
+  fetch(endpoint, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(userData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      alert(data.message);
+      if (action === "login" && data.token) {
+        localStorage.setItem("token", data.token);
+        window.location.href = "/welcome";
+      }
+      if (action === "logout") {
+        localStorage.removeItem("token");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+    </script>
+  </body>
+</html>
